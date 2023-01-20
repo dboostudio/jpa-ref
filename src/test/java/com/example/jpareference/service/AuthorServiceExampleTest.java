@@ -4,7 +4,6 @@ import com.example.jpareference.entity.Author;
 import com.example.jpareference.entity.Book;
 import com.example.jpareference.repo.AuthorRepository;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-class AuthorServiceTest {
+class AuthorServiceExampleTest {
 
     @Autowired
-    AuthorService authorService;
+    AuthorServiceExample authorService;
 
     @Autowired
     AuthorRepository authorRepository;
@@ -30,7 +29,7 @@ class AuthorServiceTest {
         // then
         Optional<Author> byId = authorRepository.findById(author.getId());
         System.out.println(byId.get());
-//        byId.get().getName().equals("돈키호테");
+        byId.get().getName().equals("돈키호테");
     }
 
     @Test
@@ -52,6 +51,19 @@ class AuthorServiceTest {
         Author author = authorService.registerBookToAuthor();
         List<Book> books = author.getBooks();
         System.out.println(books);
+
+        // when
+        // then
+    }
+    @Test
+    @DisplayName("저자에 책 등록하기")
+    void testSetAuthor() throws Exception {
+        // given
+        List<Author> authors = authorService.testSetAuthor();
+        System.out.println(authors.get(0).getName());
+        System.out.println(authors.get(0).getBooks());
+        System.out.println(authors.get(1).getName());
+        System.out.println(authors.get(1).getBooks());
 
         // when
         // then

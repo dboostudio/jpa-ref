@@ -22,16 +22,10 @@ public class Author {
 
     private String name;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
     private List<Book> books;
 
     @Transient
     private String temp;
-
-    public void addBooks(List<Book> bookList){
-
-        books.addAll(bookList);
-
-    }
 
 }

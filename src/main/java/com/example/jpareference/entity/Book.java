@@ -1,5 +1,6 @@
 package com.example.jpareference.entity;
 
+import com.example.jpareference.dto.response.BookDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,11 +27,22 @@ public class Book {
     private BookCategory bookCategory;
 
     public void setAuthor(Author author){
-        if (this.author != null) {
+
+        // 기존 연관관계 Author->Book 를 지운다.
+        if (this.author != null && this.author.getBooks().contains(this))
             this.author.getBooks().remove(this);
-        }
+        // Book -> Author 연관관계를 변경한다.
         this.author = author;
-        author.getBooks().add(this);
+        // 새로운 Author -> Book 연관관계를 등록한다.
+        if (!author.getBooks().contains(this))
+            author.getBooks().add(this);
+    }
+
+    public BookDto toDto() {
+        return BookDto.builder()
+                .bookCategory(this.bookCategory)
+                .description(this.description)
+                .build();
     }
 
 }

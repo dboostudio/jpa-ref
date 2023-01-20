@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorService {
+public class AuthorServiceExample {
 
 
     private final AuthorRepository authorRepository;
@@ -33,18 +33,14 @@ public class AuthorService {
 
     @Transactional
     public Author createAuthorAndChangeName(String name) {
-        Author author = Author.builder()
-                .name(name)
-                .books(new ArrayList<>())
-                .build();
-        authorRepository.save(author);
+        Author author = createAuthor(name);
         author.setName("돈키호테");
         return author;
     }
 
     @Transactional
     public Long findAuthorAndChangeName(){
-        Author author = createAuthorAndChangeName("name2");
+        Author author = createAuthor("name2");
         Optional<Author> byId = authorRepository.findById(author.getId());
 
         byId.get().setName("돈키호테2");
@@ -68,6 +64,30 @@ public class AuthorService {
 
         bookRepository.saveAll(List.of(book1, book2));
         return author;
+
+    }
+
+    @Transactional
+    public List<Author> testSetAuthor(){
+        Author author = createAuthor("김민수");
+        Book book1 = Book.builder()
+                .bookCategory(BookCategory.SCIENCE)
+                .description("김민수의 수학공식")
+                .build();
+        Book book2 = Book.builder()
+                .bookCategory(BookCategory.SOCIETY)
+                .description("김민수의 세계여행")
+                .build();
+
+        book1.setAuthor(author);
+        book2.setAuthor(author);
+
+        bookRepository.saveAll(List.of(book1, book2));
+
+        Author author1 = createAuthor("강탈자");
+        book1.setAuthor(author1);
+        bookRepository.save(book1);
+        return List.of(author, author1);
 
     }
 
