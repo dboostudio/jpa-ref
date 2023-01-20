@@ -1,13 +1,15 @@
 package com.example.jpareference.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Data
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Book {
 
     @Id
@@ -16,5 +18,19 @@ public class Book {
 
     @ManyToOne
     private Author author;
+
+    @Lob
+    private String description;
+
+    @Enumerated
+    private BookCategory bookCategory;
+
+    public void setAuthor(Author author){
+        if (this.author != null) {
+            this.author.getBooks().remove(this);
+        }
+        this.author = author;
+        author.getBooks().add(this);
+    }
 
 }

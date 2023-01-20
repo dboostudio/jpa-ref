@@ -25,4 +25,13 @@ public class Author {
     @OneToMany(mappedBy = "author")
     private List<Book> books;
 
+    @Transient
+    private String temp;
+
+    public void addBooks(List<Book> bookList){
+
+        books.addAll(bookList);
+
+    }
+
 }
