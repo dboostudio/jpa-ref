@@ -86,7 +86,29 @@ public class AuthorServiceExample {
 
         Author author1 = createAuthor("강탈자");
         book1.setAuthor(author1);
-        bookRepository.save(book1);
+        return List.of(author, author1);
+
+    }
+
+    @Transactional
+    public List<Author> testAddBook(){
+        Author author = createAuthor("김민수");
+        Book book1 = Book.builder()
+                .bookCategory(BookCategory.SCIENCE)
+                .description("김민수의 수학공식")
+                .build();
+        Book book2 = Book.builder()
+                .bookCategory(BookCategory.SOCIETY)
+                .description("김민수의 세계여행")
+                .build();
+
+        book1.setAuthor(author);
+        book2.setAuthor(author);
+
+        bookRepository.saveAll(List.of(book1, book2));
+
+        Author author1 = createAuthor("강탈자");
+        author1.addBook(book1);
         return List.of(author, author1);
 
     }

@@ -56,10 +56,24 @@ class AuthorServiceExampleTest {
         // then
     }
     @Test
-    @DisplayName("저자에 책 등록하기")
+    @DisplayName("책의 저자 변경하기")
     void testSetAuthor() throws Exception {
         // given
         List<Author> authors = authorService.testSetAuthor();
+        System.out.println(authors.get(0).getName());
+        System.out.println(authors.get(0).getBooks());
+        System.out.println(authors.get(1).getName());
+        System.out.println(authors.get(1).getBooks());
+
+        // when
+        // then
+    }
+
+    @Test
+    @DisplayName("저자에 책 등록하기")
+    void testAddBook() throws Exception {
+        // given
+        List<Author> authors = authorService.testAddBook();
         System.out.println(authors.get(0).getName());
         System.out.println(authors.get(0).getBooks());
         System.out.println(authors.get(1).getName());

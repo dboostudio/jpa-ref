@@ -28,4 +28,10 @@ public class Author {
     @Transient
     private String temp;
 
+    public void addBook(Book book) {
+        this.getBooks().add(book);
+        if (book.getAuthor() != this)
+            book.setAuthor(this);
+    }
+
 }
