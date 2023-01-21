@@ -1,15 +1,17 @@
 package com.example.jpareference.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Data
+@Setter
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -24,5 +26,15 @@ public class Member {
 
     private String firstName;
     private String lastName;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "member")
+    private List<Rental> rentalList;
+
+    public void addRental(Rental rental) {
+        if (this.rentalList == null)
+            this.rentalList = new ArrayList<>();
+        if (!this.rentalList.contains(rental))
+            rentalList.add(rental);
+    }
 
 }

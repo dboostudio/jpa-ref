@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,9 +30,21 @@ public class Author {
     private String temp;
 
     public void addBook(Book book) {
-        this.getBooks().add(book);
+        if (this.books == null)
+            this.books = new ArrayList<>();
+        this.books.add(book);
         if (book.getAuthor() != this)
             book.setAuthor(this);
+    }
+
+    public void addBooks(List<Book> books) {
+        if (this.books == null)
+            this.books = new ArrayList<>();
+        this.books.addAll(books);
+        books.forEach(b -> {
+            if( b.getAuthor() != this)
+                b.setAuthor(this);
+        });
     }
 
 }
